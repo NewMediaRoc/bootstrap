@@ -65,6 +65,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
         if (initialAnimSkip) {
           initialAnimSkip = false;
           if ( !isCollapsed ) {
+            element.css({ 'overflow': 'visible' });
             fixUpHeight(scope, element, 'auto');
           }
         } else {
@@ -73,6 +74,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
             // This check ensures that we don't accidentally update the height if the user has closed
             // the group while the animation was still running
             if ( !isCollapsed ) {
+              element.css({ 'overflow': 'visible' });
               fixUpHeight(scope, element, 'auto');
             }
           });
@@ -82,6 +84,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
       
       var collapse = function() {
         isCollapsed = true;
+        element.css({ 'overflow': 'hidden' });
         if (initialAnimSkip) {
           initialAnimSkip = false;
           fixUpHeight(scope, element, 0);
