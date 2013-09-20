@@ -102,6 +102,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           'placement="'+startSym+'tt_placement'+endSym+'" '+
           'animation="tt_animation()" '+
           'is-open="tt_isOpen"'+
+          'compile-scope="$parent"'+
           '>'+
         '</'+ directiveName +'-popup>';
 
@@ -232,9 +233,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             // need to wait for it to expire beforehand.
             // FIXME: this is a placeholder for a port of the transitions library.
             if ( angular.isDefined( scope.tt_animation ) && scope.tt_animation() ) {
-              transitionTimeout = $timeout( function () { tooltip.remove(); }, 500 );
+              transitionTimeout = $timeout( function () { tooltip.remove(undefined, true); }, 500 );
             } else {
-              tooltip.remove();
+              tooltip.remove(undefined, true);
             }
           }
 
