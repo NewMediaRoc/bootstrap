@@ -222,7 +222,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           }
           
           // Hide the tooltip popup element.
-          function hide() {
+          function hide( destroy ) {
             // First things first: we don't show it anymore.
             scope.tt_isOpen = false;
 
@@ -233,9 +233,15 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
             // need to wait for it to expire beforehand.
             // FIXME: this is a placeholder for a port of the transitions library.
             if ( angular.isDefined( scope.tt_animation ) && scope.tt_animation() ) {
-              transitionTimeout = $timeout( function () {
-                angular.forEach( tooltip, function( e ) { e.parentNode.removeChild( e ); } );
-              }, 500 );
+              transitionTimeout = $timeout( function () { remove( destroy ); }, 500 );
+            } else {
+              remove( destroy );
+            }
+          }
+
+          function remove( destroy ) {
+            if ( destroy ) {
+              tooltip.remove();
             } else {
               angular.forEach( tooltip, function( e ) { e.parentNode.removeChild( e ); } );
             }
@@ -302,9 +308,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position', 'ui.bootstrap
           // Make sure tooltip is destroyed and removed.
           scope.$on('$destroy', function onDestroyTooltip() {
             if ( scope.tt_isOpen ) {
-              hide();
+              hide( true );
             } else {
-              tooltip.remove();
+              remove( true );
             }
           });
         }
