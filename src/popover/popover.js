@@ -23,7 +23,7 @@ angular.module( 'ui.bootstrap.popover', [ 'ui.bootstrap.tooltip' ] )
     templateUrl: 'template/popover/popover-template.html',
     link: function( scope, iElement ) {
       scope.$watch( 'content', function( templateUrl ) {
-        if ( !templateUrl ) return;
+        if ( !templateUrl ) { return; }
         $http.get( templateUrl, { cache: $templateCache } )
         .then( function( response ) {
           var contentEl = angular.element( iElement[0].querySelector( '.popover-content' ) );
